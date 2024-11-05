@@ -1,0 +1,125 @@
+/* Genel Stil Ayarları */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Üst Kısım */
+.top-bar {
+    background-color: #f8f8f8;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.top-bar-links span {
+    margin-left: 15px;
+}
+
+/* Logo ve Menü */
+.nav-bar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    justify-content: space-between;
+    background-color: #fff;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    margin-right: 10px;
+}
+
+.logo-image {
+    width: 120px; 
+    height: auto; 
+}
+.search-bar input {
+    padding: 8px;
+    width: 400px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+}
+
+.user-actions span {
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+/* Kategoriler */
+.categories {
+    display: flex;
+    justify-content: center;
+    background-color: #f1f1f1;
+    padding: 10px;
+}
+
+.categories button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    margin: 0 5px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* Slider Bölümü */
+.slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background-color: #1c2748;
+    color: #fff;
+    position: relative;
+}
+
+.slider-content h2 {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.slider-content h1 {
+    font-size: 2.5em;
+    margin: 10px 0;
+}
+
+.slider-content p {
+    font-size: 1.2em;
+}
+
+.slider img {
+    width: 200px;
+    margin-left: 20px;
+}
+
+.slider-arrows {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.arrow {
+    background-color: #fff;
+    color: #007BFF;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5em;
+}
