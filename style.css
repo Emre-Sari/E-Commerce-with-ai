@@ -39,9 +39,10 @@ body {
 }
 
 .logo-image {
-    width: 120px; 
+    width: 145px; 
     height: auto; 
 }
+
 .search-bar input {
     padding: 8px;
     width: 400px;
@@ -49,9 +50,32 @@ body {
     border: 1px solid #ccc;
 }
 
-.user-actions span {
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.user-actions .action-item {
+    display: flex;
+    align-items: center;
     margin-left: 15px;
     cursor: pointer;
+}
+
+.user-actions .action-item img {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.user-actions .action-item a {
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.user-actions .action-item a:hover {
+    color: #007bff;
 }
 
 /* Kategoriler */
