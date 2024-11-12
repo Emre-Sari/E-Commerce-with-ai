@@ -3,27 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aydın Tıcaret</title>
+    <title>Aydın Ticaret</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Üst Kısım -->
     <header>
-        
-        
         <!-- Logo ve Menü -->
         <div class="nav-bar">
             <div class="logo">
-                <img src="img/menu-icon.png" alt="Menu Icon">
+                <img src="img/menu-icon.png" alt="Menu Icon" id="menu-toggle">
                 <img src="img/logo.png" alt="Logo" class="logo-image">
             </div>
             <div class="search-bar">
-                <input type="text" placeholder="   Ayakkabıya dair İhtiyacınız olan herşey ...">
+                <input type="text" placeholder="   Ayakkabıya dair ihtiyacınız olan her şey...">
             </div>
             <div class="user-actions">
                 <div class="action-item">
                     <img src="img/user.png" alt="Sign In Icon" class="icon">
-                    <a href="#">Giriş Yap/Kayit Ol</a>
+                    <a href="#">Giriş Yap/Kayıt Ol</a>
                 </div>
                 <div class="action-item">
                     <img src="img/cart.svg" alt="Cart Icon" class="icon">
@@ -31,10 +29,25 @@
                 </div>
             </div>
         </div>
+            <!-- Yan Menü -->
+       <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <span id="close-sidebar" class="close-btn">X</span>
+    </div>
+    <ul>
+        <li><a href="#"><img src="icons/shoe_sole.png" alt="Taban Malzemeleri" class="sidebar-icon">Taban Malzemeleri</a></li>
+        <li><a href="#"><img src="icons/shoeico.png" alt="Saya Malzemeleri" class="sidebar-icon">Saya Malzemeleri</a></li>
+        <li><a href="#"><img src="icons/shoeic.png" alt="Astar Malzemeleri" class="sidebar-icon">Astar Malzemeleri</a></li>
+        <li><a href="#"><img src="icons/lase.png" alt="Bağcıklar" class="sidebar-icon">Bağcıklar</a></li>
+        <li><a href="#"><img src="icons/glue.png" alt="Yapıştırıcılar ve Kimyasallar" class="sidebar-icon">Yapıştırıcılar ve Kimyasallar</a></li>
+        <li><a href="#"><img src="icons/aksesuar.png" alt="Aksesuarlar" class="sidebar-icon">Aksesuarlar</a></li>
+        <li><a href="#"><img src="icons/polish.png" alt="Boyalar" class="sidebar-icon">Boyalar</a></li>
+    </ul>
+</nav>
         
         <!-- Kategoriler -->
         <nav class="categories">
-            <button>Taban Malzemeleri</button>
+            <button onclick="window.location.href='taban-malzemeleri.html'">Taban Malzemeleri</button>
             <button>Saya Malzemeleri</button>
             <button>Astar Malzemeleri</button>
             <button>Bağcıklar</button>
@@ -47,15 +60,113 @@
     <!-- Slider Bölümü -->
     <section class="slider">
         <div class="slider-content">
-            <h2>En iyi indirimler ayakkabi tabanlarinda </h2>
-            <h1>Ayakkabi tabani.</h1>
+            <h2>En iyi indirimler ayakkabı tabanlarında</h2>
+            <h1>Ayakkabı Tabanı</h1>
             <p>%40'a varan indirim</p>
         </div>
-        <img src="img/shoe.jpg" alt="Shoe">
+        <img id="slider-image" src="img/boya1.jpg" alt="Slider Image">
         <div class="slider-arrows">
-            <span class="arrow left">&lt;</span>
-            <span class="arrow right">&gt;</span>
+            <span class="arrow left" onclick="prevImage()">&#x3c;</span>
+            <span class="arrow right" onclick="nextImage()">&#x3e;</span>
         </div>
     </section>
+
+    <!-- Ürün Kartları Bölümü -->
+    <section class="products-section">
+        <h2>İndirimleri Yakala <span class="highlight">Ayakkabı Boyaları</span></h2>
+        <div class="product-list">
+            <!-- Ürün Kartı 1 -->
+            <div class="product-card">
+                <div class="discount">56% OFF</div>
+                <img src="img/boya1.jpg" alt="boya1">
+                <h3>Sitil Ayakkabı Boyası Siyah 200 Gr</h3>
+                <p class="price">127.23 TL <span class="original-price">175 TL</span></p>
+               
+            </div>
+            
+            <!-- Ürün Kartı 2 -->
+            <div class="product-card">
+                <div class="discount">56% OFF</div>
+                <img src="img/boya2.jpg" alt="boya2">
+                <h3>Flexi Care Beyaz Ayakkabı Boyasi</h3>
+                <p class="price">41 TL <span class="original-price">87 TL</span></p>
+            
+            </div>
+            
+            <!-- Ürün Kartı 3 -->
+            <div class="product-card">
+                <div class="discount">56% OFF</div>
+                <img src="img/boya3.webp" alt="boya3">
+                <h3>Sitil Likit Ayakkabı Boyası Siyah 80 Ml</h3>
+                <p class="price">56.76 TL <span class="original-price">87 TL</span></p>
+           
+            </div>
+            
+            <!-- Ürün Kartı 4 -->
+            <div class="product-card">
+                <div class="discount">56% OFF</div>
+                <img src="img/boya4.jpg" alt="boya4">
+                <h3>Show Spor Ayakkabı Boyası 75gr. Beyaz</h3>
+                <p class="price">78 TL <span class="original-price">90 TL</span></p>
+            </div>
+            
+            <!-- Ürün Kartı 5 -->
+            <div class="product-card">
+                <div class="discount">56% OFF</div>
+                <img src="img/boya5.jpg" alt="boya5">
+                <h3>Wr-1000 Walker Krem</h3>
+                <p class="price">83 TL <span class="original-price">134 TL</span></p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <!-- Logo ve İletişim -->
+        <div class="footer-section contact-info">
+            <h2>Aydın Ticaret</h2>
+            <p><strong>Bizimle İletişime geç</strong></p>
+            <p><i class="fa fa-whatsapp"></i> WhatsApp: +90 543 885 07 41</p>
+            <p><i class="fa fa-phone"></i> Bizi ara: +90 543 885 07 41</p>
+        </div>
+        
+        <!-- En Popüler Kategoriler -->
+        <div class="footer-section popular-categories">
+            <h3>En Popüler Kategoriler</h3>
+            <ul>
+                <li>Ayakkabılar</li>
+                <li>Bağcıklar</li>
+                <li>Saya Malzemelrı</li>
+                <li>Tabanlar</li>
+                <li>Boyalar</li>
+            </ul>
+        </div>
+        
+        <!-- Müşteri Hizmetleri -->
+        <div class="footer-section customer-services">
+            <h3>Müşteri Hizmetleri</h3>
+            <ul>
+                <li>Biz Kimiz </li>
+                <li>Terms & Conditions</li>
+                <li>Sık Sorulanlar</li>
+                <li>Privacy Policy</li>
+                <li>İptal & İade Politikası</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Alt Bilgi -->
+    <div class="footer-bottom">
+        <p>© 2024 All rights reserved. Sarılar Ltd.</p>
+    </div>
+</footer>
+
+    <script src="script.js"></script>
+
+    
+
 </body>
 </html>
