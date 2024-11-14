@@ -1,6 +1,6 @@
-async function fetchTabanMalzemeleri() {
+async function fetchYapistiriciMalzemeleri() {
     try {
-        const response = await fetch("http://localhost:3000/api/taban-malzemeleri");
+        const response = await fetch("http://localhost:3000/api/yapistirici-malzemeleri");
         const products = await response.json();
 
         const productList = document.getElementById("product-list");
@@ -43,4 +43,4 @@ async function fetchTabanMalzemeleri() {
 
 
 
-document.addEventListener("DOMContentLoaded", fetchTabanMalzemeleri);
+document.addEventListener("DOMContentLoaded", fetchYapistiriciMalzemeleri);

@@ -27,7 +27,46 @@ app.get("/api/taban-malzemeleri", (req, res) => {
         res.json(results);
     });
 });
-
+// "saya Malzemeleri" ürünlerini çeken API
+app.get("/api/saya-malzemeleri", (req, res) => {
+    const query = "SELECT * FROM products WHERE category = 'Saya Malzemeleri'";
+    db.query(query, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
+// "Bagcik Malzemeleri" ürünlerini çeken API
+app.get("/api/bagcik-malzemeleri", (req, res) => {
+    const query = "SELECT * FROM products WHERE category = 'Bagcik Malzemeleri'";
+    db.query(query, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
+// "Yapistirici Malzemeleri" ürünlerini çeken API
+app.get("/api/yapistirici-malzemeleri", (req, res) => {
+    const query = "SELECT * FROM products WHERE category = 'Yapistirici Malzemeleri'";
+    db.query(query, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
+// "aksesuar Malzemeleri" ürünlerini çeken API
+app.get("/api/aksesuar", (req, res) => {
+    const query = "SELECT * FROM products WHERE category = 'Aksesuar'";
+    db.query(query, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
+// "boya Malzemeleri" ürünlerini çeken API
+app.get("/api/boya", (req, res) => {
+    const query = "SELECT * FROM products WHERE category = 'Boya'";
+    db.query(query, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
 app.listen(port, () => {
     console.log(`Sunucu ${port} portunda çalışıyor.`);
 });
