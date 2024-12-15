@@ -9,43 +9,44 @@
 <body>
     <header>
         <!-- Header kısmını ana sayfadan kopyalayın -->
-    <!-- Logo ve Menü -->
-    <div class="nav-bar">
-        <div class="logo">
-            <img src="img/menu-icon.png" alt="Menu Icon" id="menu-toggle">
-            <a href="index.html"> 
-                <img src="img/logo.png" alt="Logo" class="logo-image">
-            </a>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="   Ayakkabıya dair ihtiyacınız olan her şey...">
-        </div>
-        <div class="user-actions">
-            <div class="action-item">
-                <img src="img/user.png" alt="Sign In Icon" class="icon">
-                <a href="#">Giriş Yap/Kayıt Ol</a>
+        <div class="nav-bar">
+            <div class="logo">
+                <img src="img/menu-icon.png" alt="Menu Icon" id="menu-toggle">
+                <a href="index.html"> 
+                    <img src="img/logo.png" alt="Logo" class="logo-image">
+                </a>
             </div>
-            <div class="action-item">
-                <img src="img/cart.svg" alt="Cart Icon" class="icon">
-                <a href="#">Sepet</a>
+            <div class="search-bar">
+                <input type="text" placeholder="   Ayakkabıya dair ihtiyacınız olan her şey...">
+            </div>
+            <div class="user-actions">
+                <div class="action-item">
+                    <img src="img/user.png" alt="Sign In Icon" class="icon">
+                    <a href="#">Giriş Yap/Kayıt Ol</a>
+                </div>
+                <div class="action-item">
+                    <img src="img/cart.svg" alt="Cart Icon" class="icon">
+                    <a href="#">Sepet</a>
+                </div>
             </div>
         </div>
-    </div>
+
         <!-- Yan Menü -->
-   <nav class="sidebar" id="sidebar">
-<div class="sidebar-header">
-    <span id="close-sidebar" class="close-btn">X</span>
-</div>
-<ul>
-    <li><a href="taban-malzemeleri.html"><img src="icons/shoe_sole.png" alt="Taban Malzemeleri" class="sidebar-icon">Taban Malzemeleri</a></li>
-    <li><a href="saya-malzemeleri.html"><img src="icons/shoeico.png" alt="Saya Malzemeleri" class="sidebar-icon">Saya Malzemeleri</a></li>
-    <li><a href="bagcik-malzemeleri.html"><img src="icons/lase.png" alt="Bağcıklar" class="sidebar-icon">Bağcıklar</a></li>
-    <li><a href="yapistirici-malzemeleri.html"><img src="icons/glue.png" alt="Yapıştırıcılar ve Kimyasallar" class="sidebar-icon">Yapıştırıcılar ve Kimyasallar</a></li>
-    <li><a href="aksesuar.html"><img src="icons/aksesuar.png" alt="Aksesuarlar" class="sidebar-icon">Aksesuarlar</a></li>
-    <li><a href="boya.html"><img src="icons/polish.png" alt="Boyalar" class="sidebar-icon">Boyalar</a></li>
-</ul>
-</nav>
-    
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span id="close-sidebar" class="close-btn">X</span>
+            </div>
+            <ul>
+                <li><a href="taban-malzemeleri.html"><img src="icons/shoe_sole.png" alt="Taban Malzemeleri" class="sidebar-icon">Taban Malzemeleri</a></li>
+                <li><a href="saya-malzemeleri.html"><img src="icons/shoeico.png" alt="Saya Malzemeleri" class="sidebar-icon">Saya Malzemeleri</a></li>
+                <li><a href="bagcik-malzemeleri.html"><img src="icons/lase.png" alt="Bağcıklar" class="sidebar-icon">Bağcıklar</a></li>
+                <li><a href="yapistirici-malzemeleri.html"><img src="icons/glue.png" alt="Yapıştırıcılar ve Kimyasallar" class="sidebar-icon">Yapıştırıcılar ve Kimyasallar</a></li>
+                <li><a href="aksesuar.html"><img src="icons/aksesuar.png" alt="Aksesuarlar" class="sidebar-icon">Aksesuarlar</a></li>
+                <li><a href="boya.html"><img src="icons/polish.png" alt="Boyalar" class="sidebar-icon">Boyalar</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <!-- Kategoriler -->
     <nav class="categories">
         <button onclick="window.location.href='taban-malzemeleri.html'">Taban Malzemeleri</button>
@@ -55,8 +56,6 @@
         <button onclick="window.location.href='aksesuar.html'">Aksesuarlar</button>
         <button onclick="window.location.href='boya.html'">Boyalar</button>
     </nav>
-    
-    </header>
 
     <section class="shoe-paint-section">
         <h2 class="title-shoe-paints">Taban Malzemeleri</h2>
@@ -64,16 +63,68 @@
         <div id="product-list" class="product-list"></div>
     </section>
 
-    <script src="tabanmalzemeleri.js"></script>
-    <script>// Menü simgesi tıklama işlevi
+    <script>
+        // Menü simgesi tıklama işlevi
         document.getElementById("menu-toggle").addEventListener("click", function() {
             const sidebar = document.getElementById("sidebar");
             sidebar.classList.toggle("open");
         });
-         // Sidebar'ı kapatmak için "X" butonuna tıklama işlevi
+
+        // Sidebar'ı kapatmak için "X" butonuna tıklama işlevi
         document.getElementById("close-sidebar").addEventListener("click", function() {
             const sidebar = document.getElementById("sidebar");
             sidebar.classList.remove("open");
-        });</script>
+        });
+
+        // fetchTabanMalzemeleri fonksiyonu
+        async function fetchTabanMalzemeleri() {
+            try {
+                const response = await fetch("http://localhost:3000/api/taban-malzemeleri");
+                if (!response.ok) {
+                    throw new Error("Ürünler getirilemedi");
+                }
+
+                const products = await response.json();
+                const productList = document.getElementById("product-list");
+
+                if (products.length === 0) {
+                    productList.innerHTML = '<p>Ürün bulunamadı.</p>';
+                    return;
+                }
+
+                products.forEach((product) => {
+                    const productCard = document.createElement("div");
+                    productCard.classList.add("product-card");
+
+                    productCard.innerHTML = `
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="${product.image_url}" alt="${product.name}" class="product-image">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">${product.name}</h3>
+                            <p class="product-description">${product.description}</p>
+                            <p class="product-price">${product.price} TL</p>
+                            <p class="product-rating">${"⭐".repeat(product.rating || 0)}</p>
+                            <button class="add-to-cart">Sepete Ekle</button>
+                        </div>
+                    </div>
+                    `;
+
+                    // Ürün kartına tıklanabilirlik ekleme
+                    productCard.addEventListener("click", () => {
+                        window.location.href = `taban-malzemeleri-detay.html?id=${product.id}`; // Detay sayfasına yönlendirme
+                    });
+
+                    productList.appendChild(productCard);
+                });
+            } catch (error) {
+                console.error("Veriler çekilirken hata oluştu:", error);
+            }
+        }
+
+        // Sayfa yüklendiğinde fetch fonksiyonunu çalıştır
+        document.addEventListener("DOMContentLoaded", fetchTabanMalzemeleri);
+    </script>
 </body>
 </html>

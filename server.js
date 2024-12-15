@@ -67,6 +67,26 @@ app.get("/api/boya", (req, res) => {
         res.json(results);
     });
 });
+
+// Tek bir ürün detaylarını çeken API
+app.get("/api/taban-malzemeleri/:id", (req, res) => {
+    const productId = req.params.id;
+    const query = "SELECT * FROM products WHERE id = ?";
+    db.query(query, [productId], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Sunucu hatası" });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ message: "Ürün bulunamadı." });
+        }
+        res.json(results[0]);
+    });
+});
+
+
+
 app.listen(port, () => {
     console.log(`Sunucu ${port} portunda çalışıyor.`);
 });
+

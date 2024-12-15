@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Detayı</title>
+    <header>
+        <!-- Header kısmını ana sayfadan kopyalayın -->
+        <div class="nav-bar">
+            <div class="logo">
+                <img src="img/menu-icon.png" alt="Menu Icon" id="menu-toggle">
+                <a href="index.html"> 
+                    <img src="img/logo.png" alt="Logo" class="logo-image">
+                </a>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="   Ayakkabıya dair ihtiyacınız olan her şey...">
+            </div>
+            <div class="user-actions">
+                <div class="action-item">
+                    <img src="img/user.png" alt="Sign In Icon" class="icon">
+                    <a href="#">Giriş Yap/Kayıt Ol</a>
+                </div>
+                <div class="action-item">
+                    <img src="img/cart.svg" alt="Cart Icon" class="icon">
+                    <a href="#">Sepet</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yan Menü -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span id="close-sidebar" class="close-btn">X</span>
+    
+        </nav>
+    </header>
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .product-header {
+            display: flex;
+            gap: 20px;
+        }
+        .product-gallery {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .product-gallery img {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+        .thumbnail-container {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .product-details {
+            flex: 2;
+        }
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .product-price {
+            font-size: 22px;
+            color: #007BFF;
+            margin-bottom: 10px;
+        }
+        .product-description {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .add-to-cart-btn {
+            background-color: #ff4500;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 420px;
+            width: 168px;
+            margin-top: 187px;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #e63900;
+        }
+        .product-reviews {
+            margin-top: 30px;
+        }
+        .review-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .review {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #f7f7f7;
+        }
+        .review-user {
+            font-weight: bold;
+            color: #555;
+        }
+        .review-text {
+            margin: 5px 0 10px;
+            color: #666;
+        }
+        .add-review textarea {
+            width: 100%;
+            height: 80px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .submit-review-btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .submit-review-btn:hover {
+            background-color: #0056b3;
+        }
+        .related-products {
+            margin-top: 30px;
+        }
+        .related-products h2 {
+            font-size: 20px;
+            color: #333;
+        }
+        .related-product {
+            display: inline-block;
+            width: 30%;
+            margin: 10px 1%;
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .related-product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .related-product p {
+            margin: 10px 0 5px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Ürün Bilgileri -->
+        <div class="product-header">
+            <div class="product-gallery">
+                <img id="product-image" src="" alt="Ürün Resmi">
+               
+            </div>
+            <div class="product-details">
+                <h1 id="product-title" class="product-title">Ürün Adı</h1>
+                <p id="product-price" class="product-price">₺0</p>
+                <p id="product-description" class="product-description">Ürün açıklaması burada görünecek.</p>
+                <button class="add-to-cart-btn">Sepete Ekle</button>
+            </div>
+        </div>
+<!-- Özellikler Tablosu -->
+<section class="product-specs">
+    <h2>Ürün Özellikleri</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Özellik</th>
+                <th>Değer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Malzeme</td>
+                <td>Sentetik</td>
+            </tr>
+            <tr>
+                <td>Renk</td>
+                <td>Siyah</td>
+            </tr>
+            <tr>
+                <td>Boyut</td>
+                <td>42-45</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+        <!-- Kullanıcı Yorumları -->
+        <div class="product-reviews">
+            <div id="reviews">
+                <!-- Örnek yorumlar -->
+                <section class="product-reviews">
+                    <h2>Kullanıcı Yorumları</h2>
+                    <div class="review">
+                        <h3>Ahmet Y.</h3>
+                        <p>Ürün oldukça kaliteli. Tavsiye ederim!</p>
+                        <p>⭐️⭐️⭐️⭐️⭐️</p>
+                    </div>
+                    <div class="review">
+                        <h3>Elif K.</h3>
+                        <p>Fiyat performans açısından harika bir ürün.</p>
+                        <p>⭐️⭐️⭐️⭐️</p>
+                    </div>
+                    <div class="review">
+                        <h3>Murat T.</h3>
+                        <p>Biraz sert bir malzemesi var, ama yine de güzel.</p>
+                        <p>⭐️⭐️⭐️</p>
+                    </div>
+                </section>
+            </div>
+            <div class="add-review">
+                <textarea id="review-text" placeholder="Yorumunuzu buraya yazın..."></textarea>
+                <button id="submit-review" class="submit-review-btn">Yorum Yap</button>
+            </div>
+        </div>
+
+        <!-- Benzer Ürünler -->
+        <div class="related-products">
+            <h2>Benzer Ürünler</h2>
+            <div class="related-product">
+                <img src="img/related1.jpg" alt="Benzer Ürün 1">
+                <p>Benzer Ürün 1</p>
+                <p>₺500</p>
+            </div>
+            <div class="related-product">
+                <img src="img/related2.jpg" alt="Benzer Ürün 2">
+                <p>Benzer Ürün 2</p>
+                <p>₺600</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchProductDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get("id");
+
+            if (!productId) {
+                console.error("Ürün kimliği bulunamadı.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/taban-malzemeleri/${productId}`);
+                const product = await response.json();
+
+                document.getElementById("product-image").src = product.image_url;
+                document.getElementById("product-title").textContent = product.name;
+                document.getElementById("product-price").textContent = `₺${product.price}`;
+                document.getElementById("product-description").textContent = product.description;
+            } catch (error) {
+                console.error("Ürün bilgileri yüklenirken hata oluştu:", error);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchProductDetails);
+    </script>
+</body>
+</html>

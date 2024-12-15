@@ -1,5 +1,7 @@
+// fetchTabanMalzemeleri fonksiyonu, ürünleri veri tabanından çekip sayfada listeleyecek
 async function fetchTabanMalzemeleri() {
     try {
+        // Burada API'den veri çekiyoruz. (Backend'de /api/taban-malzemeleri API'si çalışmalıdır)
         const response = await fetch("http://localhost:3000/api/taban-malzemeleri");
         const products = await response.json();
 
@@ -8,32 +10,34 @@ async function fetchTabanMalzemeleri() {
         if (products.length === 0) {
             productList.innerHTML = '<p>Ürün bulunamadı.</p>';
             return;
-
         }
 
+        // Ürünleri sayfada listelemek
         products.forEach((product) => {
             const productCard = document.createElement("div");
             productCard.classList.add("product-card");
 
-            productCard.innerHTML =  `
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="${product.image_url}" alt="${product.name}" class="product-image">
+            productCard.innerHTML = `
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="${product.image_url}" alt="${product.name}" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <p class="product-price">${product.price} TL</p>
+                        <p class="product-rating">${"⭐".repeat(product.rating)}</p>
+                        <button class="add-to-cart">Sepete Ekle</button>
+                    </div>
                 </div>
-                <div class="product-info">
-                    <h3 class="product-name">${product.name}</h3>
-                    <p class="product-description">${product.description}</p>
-                    <p class="product-price">${product.price} TL</p>
-                    <p class="product-rating">${"⭐".repeat(product.rating)}</p>
-                    <p class="rating">
-</p>
+            `;
 
-                    <button class="add-to-cart">Sepete Ekle</button>
-                </div>
-            </div>
-        `;
-            console.log(products);  // Konsolda ürünleri kontrol et
+            // Ürün kartına tıklanabilirlik ekleme
+            productCard.addEventListener('click', () => {
+                window.location.href = `/detay.html?id=${product.id}`;  // Detay sayfasına yönlendir
+            });
 
+            // Ürün kartını listeye ekleme
             productList.appendChild(productCard);
         });
     } catch (error) {
@@ -41,6 +45,5 @@ async function fetchTabanMalzemeleri() {
     }
 }
 
-
-
+// Sayfa yüklendiğinde fetch fonksiyonunu çalıştır
 document.addEventListener("DOMContentLoaded", fetchTabanMalzemeleri);

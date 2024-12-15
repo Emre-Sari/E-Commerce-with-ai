@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Detayı</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <!-- Header kısmı ve Menü kısmı burada aynen olacak -->
+    </header>
+
+    <section class="product-detail-section">
+        <div id="product-detail" class="product-detail">
+            <!-- Ürün Detayları Burada Görüntülenecek -->
+        </div>
+        
+        <div class="product-reviews">
+            <h3>Kullanıcı Yorumları</h3>
+            <div class="review">
+                <p><strong>Ali Yılmaz:</strong> Harika bir ürün! Çok kaliteli.</p>
+            </div>
+            <div class="review">
+                <p><strong>Ahmet Öztürk:</strong> Biraz pahalı ama gerçekten işini çok iyi yapıyor.</p>
+            </div>
+            <div class="review">
+                <p><strong>Ayşe Demir:</strong> 3 hafta önce aldım, gerçekten memnun kaldım!</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        async function fetchProductDetail() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get("id");
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/product/${productId}`);
+                const product = await response.json();
+
+                const productDetail = document.getElementById("product-detail");
+
+                if (product) {
+                    productDetail.innerHTML = `
+                    <div class="product-detail-info">
+                        <img src="${product.image_url}" alt="${product.name}" class="product-detail-image">
+                        <div class="product-info">
+                            <h2 class="product-detail-name">${product.name}</h2>
+                            <p class="product-detail-description">${product.description}</p>
+                            <p class="product-detail-price">${product.price} TL</p>
+                            <p class="product-detail-rating">${"⭐".repeat(product.rating)}</p>
+                            <button class="add-to-cart">Sepete Ekle</button>
+                        </div>
+                    </div>
+                    `;
+                }
+            } catch (error) {
+                console.error("Ürün detayları çekilirken hata oluştu:", error);
+            }
+        }
+
+        // Sayfa yüklendiğinde ürün detaylarını al
+        document.addEventListener("DOMContentLoaded", fetchProductDetail);
+    </script>
+</body>
+</html>
