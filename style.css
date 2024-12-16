@@ -121,10 +121,23 @@ body {
 }
 
 .search-bar input {
-    padding: 8px;
-    width: 400px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
+    padding: 10px 20px; /* Daha fazla iç boşluk */
+    width: 200px;
+    padding-right: 800px;
+    border-radius: 25px; /* Daha yuvarlak köşeler */
+    border: 1px solid #ddd; /* Hafif bir sınır rengi */
+    background-color: #f7f7f7; /* Açık gri arka plan */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Hafif gölge efekti */
+    font-size: 16px; /* Daha büyük ve okunaklı yazı */
+    color: #333; /* Koyu gri yazı rengi */
+    outline: none; /* Tıklanınca mavi çerçeveyi kaldırır */
+    transition: all 0.3s ease; /* Yumuşak geçiş efekti */
+}
+
+.search-bar input:focus {
+    border: 1px solid #00796b; /* Odaklanınca belirgin bir renk */
+    box-shadow: 0 4px 8px rgba(0, 121, 107, 0.2); /* Daha belirgin gölge */
+    background-color: #fff; /* Odaklanınca arka plan beyaz olur */
 }
 
 .user-actions {
@@ -494,7 +507,7 @@ body {
 }
 
 .paint-list {
-    display: grid;
+    display: none;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     justify-content: center;
@@ -615,4 +628,86 @@ tbody tr:hover {
 td {
     font-size: 16px;
     color: #7f8c8d;
+}
+/* Sepet İkonu */
+.cart-icon {
+    font-size: 24px;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Sepet Modal */
+.cart-modal {
+    display: none; /* Başlangıçta gizli */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.cart-modal.open {
+    display: block; /* Modal açıldığında görünür */
+}
+
+.cart-list {
+    background-color: #333;
+    border-radius: 10px;
+    padding: 20px;
+    max-height: 70%;
+    overflow-y: auto;
+}
+
+.cart-item {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.cart-item-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.cart-item-info h4 {
+    font-size: 18px;
+}
+
+.cart-item-info p {
+    font-size: 16px;
+}
+#search-results {
+    position: absolute; /* Arama çubuğuna göre sabitler */
+    top: 100%; /* Arama çubuğunun hemen altına yerleştirir */
+    left: 0;
+    width: 300%; /* Arama çubuğunun genişliği kadar yapar */
+    border-bottom: 1px solid #ddd; /* Alt çizgi ekler */
+
+    max-height: 300px; /* Maksimum yüksekliği ayarlar */
+    overflow-y: auto; /* Taşan içerik için kaydırma çubuğu ekler */
+    background-color: #fff; /* Arka plan rengi verir */
+    border: 1px solid #ddd; /* Çerçeve ekler */
+    z-index: 1000; /* Üstte görünmesini sağlar */
+    transition: background-color 0.3s ease; /* Yumuşak bir hover efekti */
+    cursor: pointer; /* Tıklanabilir hissi verir */
+
+
+}
+#search-results div:hover {
+    background-color: #e0f7fa; /* Hover (üzerine gelince) açık mavi ton */
+    color: #00796b; /* Metni koyu yeşil yapar */
+}
+
+#search-results a {
+    text-decoration: none; /* Alt çizgiyi kaldırır */
+    color: inherit; /* Ana rengin aynısını kullanır */
+}
+
+#search-results a:hover {
+    color: #004d40; /* Link rengini hover durumunda koyulaştırır */
 }

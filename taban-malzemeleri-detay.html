@@ -13,9 +13,106 @@
                     <img src="img/logo.png" alt="Logo" class="logo-image">
                 </a>
             </div>
+            
+
+
+
+
+
+
+
+
             <div class="search-bar">
-                <input type="text" placeholder="   Ayakkabıya dair ihtiyacınız olan her şey...">
+                
+            <div style="position: relative;">
+                <input type="text" id="search-bar" placeholder="Ayakkabıya dair ihtiyacınız olan her şey..." style="width: 300%; padding: 10px; " >
+                <div id="search-results" style="display: none;"></div>
             </div>
+            
+            </div>
+   
+            <script>
+                const searchInput = document.getElementById("search-bar");
+                const resultsContainer = document.getElementById("search-results");
+                let products = []; // Ürünleri API'den çekeceğiz
+            
+                // API'den ürünleri çek
+                async function fetchProducts() {
+                    try {
+                        const response = await fetch("http://localhost:3000/api/urunler");
+                        if (!response.ok) throw new Error("Ürünleri çekme sırasında bir hata oluştu.");
+                        products = await response.json(); // Ürünleri al ve global değişkene ata
+                    } catch (error) {
+                        console.error("API bağlantı hatası:", error);
+                    }
+                }
+            
+                // Arama çubuğunda input etkinliği dinle
+                searchInput.addEventListener("input", (e) => {
+                    const query = e.target.value.toLowerCase(); // Kullanıcı girdisini al
+                    resultsContainer.innerHTML = ""; // Eski sonuçları temizle
+                    resultsContainer.style.display = query ? "block" : "none"; // Arama çubuğu boşsa gizle
+            
+                    // Ürünleri filtrele ve sonuçları listele
+                    const filteredProducts = products.filter(product =>
+                        product.name.toLowerCase().includes(query)
+                    );
+            
+                    if (filteredProducts.length === 0) {
+                        resultsContainer.innerHTML = "<p style='padding: 10px;'>Sonuç bulunamadı.</p>";
+                        return;
+                    }
+            
+                    filteredProducts.forEach(product => {
+                        const productElement = document.createElement("div");
+                        productElement.style.padding = "10px";
+                        productElement.style.borderBottom = "1px solid #ddd";
+                        productElement.innerHTML = `
+                            <a href="taban-malzemeleri-detay.html?id=${product.id} style="text-decoration: none; color: #333;">
+                                <strong>${product.name}</strong> - ₺${product.price}
+                            </a>
+                        `;
+                        resultsContainer.appendChild(productElement);
+                    });
+                });
+            
+                // Sayfa yüklendiğinde ürünleri API'den çek
+                document.addEventListener("DOMContentLoaded", fetchProducts);
+            </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- Yan Menü -->
+   <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <span id="close-sidebar" class="close-btn">X</span>
+    </div>
+    <ul>
+        <li><a href="taban-malzemeleri.html"><img src="icons/shoe_sole.png" alt="Taban Malzemeleri" class="sidebar-icon">Taban Malzemeleri</a></li>
+        <li><a href="saya-malzemeleri.html"><img src="icons/shoeico.png" alt="Saya Malzemeleri" class="sidebar-icon">Saya Malzemeleri</a></li>
+        <li><a href="bagcik-malzemeleri.html"><img src="icons/lase.png" alt="Bağcıklar" class="sidebar-icon">Bağcıklar</a></li>
+        <li><a href="yapistirici-malzemeleri.html"><img src="icons/glue.png" alt="Yapıştırıcılar ve Kimyasallar" class="sidebar-icon">Yapıştırıcılar ve Kimyasallar</a></li>
+        <li><a href="aksesuar.html"><img src="icons/aksesuar.png" alt="Aksesuarlar" class="sidebar-icon">Aksesuarlar</a></li>
+        <li><a href="boya.html"><img src="icons/polish.png" alt="Boyalar" class="sidebar-icon">Boyalar</a></li>
+    </ul>
+    </nav>
+
+
+
+         
+
+
             <div class="user-actions">
                 <div class="action-item">
                     <img src="img/user.png" alt="Sign In Icon" class="icon">
@@ -277,6 +374,21 @@
     </div>
 
     <script>
+document.getElementById("menu-toggle").addEventListener("click", function() {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("open");
+});
+
+// Sidebar'ı kapatmak için "X" butonuna tıklama işlevi
+document.getElementById("close-sidebar").addEventListener("click", function() {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.remove("open");
+});       
+
+
+
+
+
         async function fetchProductDetails() {
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get("id");
@@ -301,5 +413,6 @@
 
         document.addEventListener("DOMContentLoaded", fetchProductDetails);
     </script>
+
 </body>
 </html>

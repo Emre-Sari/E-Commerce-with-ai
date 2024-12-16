@@ -86,6 +86,51 @@ app.get("/api/taban-malzemeleri/:id", (req, res) => {
 
 
 
+// Tüm ürünleri getiren API
+app.get("/api/urunler", (req, res) => {
+    const query = "SELECT * FROM products";
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("Ürünleri çekerken hata oluştu:", err);
+            res.status(500).json({ error: "Ürünler alınamadı." });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+// Dinamik arama API'si
+app.get("/api/arama", (req, res) => {
+    const searchTerm = req.query.q ? `%${req.query.q}%` : "%"; // Arama terimi
+    const query = `
+        SELECT * FROM products 
+        WHERE name LIKE ? OR description LIKE ? OR category LIKE ?
+    `;
+    db.query(query, [searchTerm, searchTerm, searchTerm], (err, results) => {
+        if (err) {
+            console.error("Arama işlemi sırasında hata oluştu:", err);
+            res.status(500).json({ error: "Arama sırasında bir hata oluştu." });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.listen(port, () => {
     console.log(`Sunucu ${port} portunda çalışıyor.`);
 });

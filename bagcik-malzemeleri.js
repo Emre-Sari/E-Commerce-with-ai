@@ -1,8 +1,23 @@
-async function fetchBagcikMalzemeleri() {
+document.getElementById("menu-toggle").addEventListener("click", function() {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("open");
+});
+
+// Sidebar'ı kapatmak için "X" butonuna tıklama işlevi
+document.getElementById("close-sidebar").addEventListener("click", function() {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.remove("open");
+});       
+
+// fetchTabanMalzemeleri fonksiyonu
+async function fetchTabanMalzemeleri() {
     try {
         const response = await fetch("http://localhost:3000/api/bagcik-malzemeleri");
-        const products = await response.json();
+        if (!response.ok) {
+            throw new Error("Ürünler getirilemedi");
+        }
 
+        const products = await response.json();
         const productList = document.getElementById("product-list");
 
         if (products.length === 0) {
@@ -14,7 +29,7 @@ async function fetchBagcikMalzemeleri() {
             const productCard = document.createElement("div");
             productCard.classList.add("product-card");
 
-            productCard.innerHTML =  `
+            productCard.innerHTML = `
             <div class="product-card">
                 <div class="product-image-container">
                     <img src="${product.image_url}" alt="${product.name}" class="product-image">
@@ -23,15 +38,16 @@ async function fetchBagcikMalzemeleri() {
                     <h3 class="product-name">${product.name}</h3>
                     <p class="product-description">${product.description}</p>
                     <p class="product-price">${product.price} TL</p>
-                    <p class="product-rating">${"⭐".repeat(product.rating)}</p>
-                    <p class="rating">
-</p>
-
+                    <p class="product-rating">${"⭐".repeat(product.rating || 0)}</p>
                     <button class="add-to-cart">Sepete Ekle</button>
                 </div>
             </div>
-        `;
-            console.log(products);  // Konsolda ürünleri kontrol et
+            `;
+
+            // Ürün kartına tıklanabilirlik ekleme
+            productCard.addEventListener("click", () => {
+                window.location.href = `taban-malzemeleri-detay.html?id=${product.id}`; // Detay sayfasına yönlendirme
+            });
 
             productList.appendChild(productCard);
         });
@@ -40,6 +56,5 @@ async function fetchBagcikMalzemeleri() {
     }
 }
 
-
-
-document.addEventListener("DOMContentLoaded", fetchBagcikMalzemeleri);
+// Sayfa yüklendiğinde fetch fonksiyonunu çalıştır
+document.addEventListener("DOMContentLoaded", fetchTabanMalzemeleri);
