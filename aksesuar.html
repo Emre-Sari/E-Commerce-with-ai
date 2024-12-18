@@ -79,16 +79,20 @@
 å    
    
            
-        <div class="user-actions">
-            <div class="action-item">
-                <img src="img/user.png" alt="Sign In Icon" class="icon">
-                <a href="#" onclick="window.location.href='login.html'">Giriş Yap/Kayıt Ol</a>
-            </div>
-            <div class="action-item">
-                <img src="img/cart.svg" alt="Cart Icon" class="icon">
-                <a href="#">Sepet</a>
-            </div>
-        </div>
+<div class="user-actions">
+    <div class="action-item">
+        <img src="img/user.png" alt="User Icon" class="icon">
+        <a id="user-link" href="login.html">Giriş Yap/Kayıt Ol</a>
+    </div>
+    <div class="action-item" id="logout-action" style="display: none;">
+     <button id="logout-button" style="background: none; border: none; color: #007BFF; cursor: pointer;">Çıkış Yap</button>
+    </div>
+
+<div class="action-item">
+<img src="img/cart.svg" alt="Cart Icon" class="icon">
+<a href="#">Sepet</a>
+</div>
+</div>
     </div>
         <!-- Yan Menü -->
    <nav class="sidebar" id="sidebar">
@@ -124,6 +128,7 @@
     </section>
 
     <script src="aksesuar.js"></script>
+    <script src="index.js"></script>
 
 
 
