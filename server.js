@@ -4,13 +4,14 @@ const app = express();
 const port = 3000;
 const cors = require('cors');
 app.use(cors());
-
+app.use(express.json()); // JSON verilerini parse eder
+app.use(express.urlencoded({ extended: true })); 
 
 // MySQL bağlantısı
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "2002Emre.",  // kendi MySQL şifrenizi girin
+    password: "Drogba11gs@",  // kendi MySQL şifrenizi girin
     database: "shopDB"
 });
 
@@ -117,19 +118,45 @@ app.get("/api/arama", (req, res) => {
 });
 
 
+app.post("/register", (req, res) => {
+    const { username, email, password } = req.body;
+  
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "Tüm alanları doldurun." });
+    }
+  
+    const query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+    db.query(query, [username, email, password], (err, result) => {
+      if (err) {
+        if (err.code === "ER_DUP_ENTRY") {
+          return res.status(400).json({ message: "Bu kullanıcı adı zaten kullanılıyor." });
+        }
+        return res.status(500).json({ message: "Sunucu hatası." });
+      }
+      res.status(201).json({ message: "Kayıt başarılı! Giriş yapabilirsiniz." });
+    });
+  });
 
-
-
-
-
-
-
-
-
-
-
-
-
+app.post("/login", (req, res) => {
+    const { username, password } = req.body;
+  
+    if (!username || !password) {
+      return res.status(400).json({ message: "Kullanıcı adı ve şifre gerekli." });
+    }
+  
+    const query = "SELECT * FROM users WHERE username = ? AND password = ?";
+    db.query(query, [username, password], (err, results) => {
+      if (err) {
+        return res.status(500).json({ message: "Sunucu hatası." });
+      }
+  
+      if (results.length > 0) {
+        res.status(200).json({ message: "Giriş başarılı.", user: results[0] });
+      } else {
+        res.status(401).json({ message: "Kullanıcı adı veya şifre hatalı." });
+      }
+    });
+  });
 
 app.listen(port, () => {
     console.log(`Sunucu ${port} portunda çalışıyor.`);

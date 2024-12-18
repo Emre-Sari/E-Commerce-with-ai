@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap / Kayıt Ol</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <!-- Logo ve Menü -->
+        <div class="nav-bar">
+            <div class="logo">
+                <img src="img/menu-icon.png" alt="Menu Icon" id="menu-toggle">
+                <a href="index.html"> 
+                    <img src="img/logo.png" alt="Logo" class="logo-image">
+                </a>
+            </div>
+
+            <div class="user-actions">
+                <div class="action-item">
+                    <img src="img/user.png" alt="Sign In Icon" class="icon">
+                    <a href="login.html">Giriş Yap/Kayıt Ol</a>
+                </div>
+                <div class="action-item">
+                    <img src="img/cart.svg" alt="Cart Icon" class="icon">
+                    <a href="#">Sepet</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Giriş Yap / Kayıt Ol Formu -->
+    <section class="login-section" style="text-align: center; margin: 50px auto; max-width: 400px;">
+        <h2 style="margin-bottom: 20px;">Giriş Yap</h2>
+        <form action="login-process.php" method="POST" class="login-form">
+            <div style="margin-bottom: 15px;">
+                <label for="username" style="display: block; text-align: left;">Kullanıcı Adı / E-posta:</label>
+                <input type="text" id="username" name="username" placeholder="Kullanıcı adınızı girin" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="password" style="display: block; text-align: left;">Şifre:</label>
+                <input type="password" id="password" name="password" placeholder="Şifrenizi girin" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            </div>
+            <button type="submit" style="width: 100%; padding: 10px; background-color: #333; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Giriş Yap</button>
+        </form>
+        <p style="margin-top: 20px;">
+            Hesabınız yok mu? <a href="register.html" style="color: #007BFF; text-decoration: none;">Kayıt Ol</a>
+        </p>
+    </section>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 20px; background-color: #f4f4f4; margin-top: 30px;">
+        <p>&copy; 2024 Ayakkabı Mağazası. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <!-- login.js dosyasını dahil et -->
+    <script src="login.js"></script>
+</body>
+</html>
