@@ -143,12 +143,12 @@ body {
 .user-actions {
     display: flex;
     align-items: center;
+    gap: 15px; /* Öğeler arasındaki boşluğu ayarlayın */
 }
 
 .user-actions .action-item {
     display: flex;
     align-items: center;
-    margin-left: 15px;
     cursor: pointer;
 }
 
@@ -167,6 +167,7 @@ body {
 .user-actions .action-item a:hover {
     color: #007bff;
 }
+
 
 /* Kategoriler */
 .categories {

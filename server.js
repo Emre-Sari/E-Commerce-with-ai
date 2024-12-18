@@ -137,11 +137,11 @@ app.post("/register", (req, res) => {
     });
   });
 
-app.post("/login", (req, res) => {
+  app.post("/login", (req, res) => {
     const { username, password } = req.body;
   
     if (!username || !password) {
-      return res.status(400).json({ message: "Kullanıcı adı ve şifre gerekli." });
+      return res.status(400).json({ message: "Lütfen tüm alanları doldurun." });
     }
   
     const query = "SELECT * FROM users WHERE username = ? AND password = ?";
@@ -151,12 +151,14 @@ app.post("/login", (req, res) => {
       }
   
       if (results.length > 0) {
-        res.status(200).json({ message: "Giriş başarılı.", user: results[0] });
+        // Kullanıcı doğrulandı
+        res.status(200).json({ message: "Giriş başarılı!", username: results[0].username });
       } else {
         res.status(401).json({ message: "Kullanıcı adı veya şifre hatalı." });
       }
     });
   });
+  
 
 app.listen(port, () => {
     console.log(`Sunucu ${port} portunda çalışıyor.`);
