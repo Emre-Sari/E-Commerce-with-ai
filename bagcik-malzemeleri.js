@@ -7,7 +7,7 @@ document.getElementById("menu-toggle").addEventListener("click", function() {
 document.getElementById("close-sidebar").addEventListener("click", function() {
     const sidebar = document.getElementById("sidebar");
     sidebar.classList.remove("open");
-});       
+});    
 
 // fetchTabanMalzemeleri fonksiyonu
 async function fetchTabanMalzemeleri() {
@@ -44,15 +44,47 @@ async function fetchTabanMalzemeleri() {
             </div>
             `;
 
-            // Ürün kartına tıklanabilirlik ekleme
-            productCard.addEventListener("click", () => {
-                window.location.href = `taban-malzemeleri-detay.html?id=${product.id}`; // Detay sayfasına yönlendirme
+            // Ürün kartına tıklanabilirlik ekleme ve ID'yi ekrana yazdırma
+            productCard.addEventListener("click", async () => {
+                // ID'yi ekranda göstermek için alert
+                alert(`Tıklanan ürünün ID'si: ${product.id}`);
+                console.log(`Tıklanan ürünün ID'si: ${product.id}`);
+
+                // Ürün ID'sini veritabanına kaydetmek için API'ye gönder
+                await logProductClick(product.id);
+
+                // Ürün sayfasına yönlendirme
+                window.location.href = `taban-malzemeleri-detay.html?id=${product.id}`;
             });
 
             productList.appendChild(productCard);
         });
     } catch (error) {
         console.error("Veriler çekilirken hata oluştu:", error);
+    }
+}
+
+// API'ye ürün ID'sini gönder
+async function logProductClick(productId) {
+    try {
+        const response = await fetch("http://localhost:3000/api/logs", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                username_: localStorage.getItem("username") // Şu anki zamanı kaydediyoruz
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error("Log kaydı yapılamadı");
+        }
+
+        console.log("Log kaydı başarılı");
+    } catch (error) {
+        console.error("Log kaydı hatası:", error);
     }
 }
 

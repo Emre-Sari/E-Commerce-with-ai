@@ -160,6 +160,27 @@ app.post("/register", (req, res) => {
   });
   
 
+// Ürün tıklama loglarını kaydetme API'si
+app.post('/api/logs', (req, res) => {
+    const { product_id, username_ } = req.body;
+
+    if (!product_id || !username_) {
+        return res.status(400).json({ error: 'Geçersiz veri' });
+    }
+
+    const query = "INSERT INTO logs(user_name,product_id) VALUES (?, ?)";
+    const values = [username_, product_id];
+
+    db.query(query, values, (err, result) => {
+        if (err) {
+            console.error("Log kaydederken hata:", err);
+            return res.status(500).json({ error: 'Log kaydederken hata oluştu' });
+        }
+        console.log("Log kaydedildi:", result);
+        res.status(200).json({ message: 'Log başarıyla kaydedildi' });
+    });
+});
+
 app.listen(port, () => {
     console.log(`Sunucu ${port} portunda çalışıyor.`);
 });
