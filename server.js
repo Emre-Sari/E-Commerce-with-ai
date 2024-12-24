@@ -1,12 +1,13 @@
 const express = require("express");
 const mysql = require("mysql2");
+const path = require('path');
 const app = express();
 const port = 3000;
 const cors = require('cors');
 app.use(cors());
 app.use(express.json()); // JSON verilerini parse eder
 app.use(express.urlencoded({ extended: true })); 
-
+app.use(express.static(path.join(__dirname, 'public')));
 // MySQL bağlantısı
 const db = mysql.createConnection({
     host: "localhost",
@@ -179,6 +180,37 @@ app.post('/api/logs', (req, res) => {
         console.log("Log kaydedildi:", result);
         res.status(200).json({ message: 'Log başarıyla kaydedildi' });
     });
+});
+
+app.get('/top-products', (req, res) => {
+  const username = req.query.username;
+
+  if (!username) {
+    return res.status(400).send('Kullanıcı adı gerekli.');
+  }
+
+  const query = `
+    SELECT products.id, products.name, products.image_url, 
+    products.price, COUNT(logs.product_id) as click_count
+    FROM products
+    JOIN logs ON logs.product_id = products.id
+    WHERE logs.user_name = ?
+    GROUP BY logs.product_id, products.id
+    ORDER BY COUNT(logs.product_id) DESC
+    LIMIT 5
+  `;
+
+  db.query(query, [username], (err, results) => {
+    if (err) {
+      return res.status(500).send('Veritabanı hatası.');
+    }
+
+    if (results.length === 0) {
+      return res.status(404).send('Kullanıcıya ait tıklama verisi bulunamadı.');
+    }
+
+    res.json(results);
+  });
 });
 
 app.listen(port, () => {

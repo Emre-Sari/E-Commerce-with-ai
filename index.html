@@ -135,54 +135,64 @@
         </div>
     </section>
 
-    <!-- Ürün Kartları Bölümü -->
-    <section class="products-section">
-        <h2>İndirimleri Yakala <span class="highlight">Ayakkabı Boyaları</span></h2>
-        <div class="product-list">
-            <!-- Ürün Kartı 1 -->
-            <div class="product-card">
-                <div class="discount">56% OFF</div>
-                <img src="img/boya1.jpg" alt="boya1">
-                <h3>Sitil Ayakkabı Boyası Siyah 200 Gr</h3>
-                <p class="price">127.23 TL <span class="original-price">175 TL</span></p>
-               
-            </div>
-            
-            <!-- Ürün Kartı 2 -->
-            <div class="product-card">
-                <div class="discount">56% OFF</div>
-                <img src="img/boya2.jpg" alt="boya2">
-                <h3>Flexi Care Beyaz Ayakkabı Boyasi</h3>
-                <p class="price">41 TL <span class="original-price">87 TL</span></p>
-            
-            </div>
-            
-            <!-- Ürün Kartı 3 -->
-            <div class="product-card">
-                <div class="discount">56% OFF</div>
-                <img src="img/boya3.webp" alt="boya3">
-                <h3>Sitil Likit Ayakkabı Boyası Siyah 80 Ml</h3>
-                <p class="price">56.76 TL <span class="original-price">87 TL</span></p>
-           
-            </div>
-            
-            <!-- Ürün Kartı 4 -->
-            <div class="product-card">
-                <div class="discount">56% OFF</div>
-                <img src="img/boya4.jpg" alt="boya4">
-                <h3>Show Spor Ayakkabı Boyası 75gr. Beyaz</h3>
-                <p class="price">78 TL <span class="original-price">90 TL</span></p>
-            </div>
-            
-            <!-- Ürün Kartı 5 -->
-            <div class="product-card">
-                <div class="discount">56% OFF</div>
-                <img src="img/boya5.jpg" alt="boya5">
-                <h3>Wr-1000 Walker Krem</h3>
-                <p class="price">83 TL <span class="original-price">134 TL</span></p>
-            </div>
-        </div>
-    </section>
+   <!-- Ürün Kartları Bölümü -->
+<section class="products-section">
+    <h2>İndirimleri Yakala <span class="highlight">Ayakkabı Boyaları</span></h2>
+    <div class="product-list">
+      <!-- Ürünler buraya dinamik olarak yüklenecek -->
+    </div>
+  </section>
+  
+  <script>
+    const username = localStorage.getItem('username');
+
+// API'den verileri al ve sayfaya uygula
+if (username) {
+  fetch(`http://localhost:3000/top-products?username=${username}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Veriler alınırken bir hata oluştu.');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const productList = document.querySelector('.product-list');
+      productList.innerHTML = ''; // Mevcut ürün kartlarını temizle
+
+      data.forEach(product => {
+        // `price` değerini sayıya dönüştür
+        const price = parseFloat(product.price);
+
+        if (isNaN(price)) {
+          console.error('Geçersiz fiyat:', product.price);
+          return; // Eğer fiyat geçerli değilse, bu ürünü atla
+        }
+
+        // İndirim yüzdesi hesaplama
+        const discountPercentage = Math.round((1 - price / (price / 0.56)) * 100);
+
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card');
+
+        productCard.innerHTML = `
+          <div class="discount">${discountPercentage}% OFF</div>
+          <img src="${product.image_url}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p class="price">${price.toFixed(2)} TL <span class="original-price">${(price / 0.56).toFixed(2)} TL</span></p>
+        `;
+
+        productList.appendChild(productCard);
+      });
+    })
+    .catch(error => {
+      console.error('Hata:', error);
+    });
+} else {
+  console.error('localStorage\'dan kullanıcı adı alınamadı.');
+}
+  </script>
+  
+  
 
 
 
