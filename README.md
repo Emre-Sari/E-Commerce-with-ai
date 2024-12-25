@@ -3,7 +3,7 @@
 # StockKontrol
 ![Custom Badge](https://img.shields.io/badge/Firat-University-red.svg)
 ![Platform](https://img.shields.io/badge/platform-node.js-green.svg)
-![Database](https://img.shields.io/badge/mysql-blue.svg)
+![Database](https://img.shields.io/badge/db-mysql-blue.svg)
 ![Version](https://img.shields.io/badge/version-0.1-purple.svg)
 ## This is a stock control project for small business
 
