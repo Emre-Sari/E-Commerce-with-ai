@@ -23,62 +23,9 @@
                     <div id="search-results" style="display: none;"></div>
                 </div>
                 
-                </div>
-       
-                <script>
-                    const searchInput = document.getElementById("search-bar");
-                    const resultsContainer = document.getElementById("search-results");
-                    let products = []; // Ürünleri API'den çekeceğiz
-                
-                    // API'den ürünleri çek
-                    async function fetchProducts() {
-                        try {
-                            const response = await fetch("http://localhost:3000/api/urunler");
-                            if (!response.ok) throw new Error("Ürünleri çekme sırasında bir hata oluştu.");
-                            products = await response.json(); // Ürünleri al ve global değişkene ata
-                        } catch (error) {
-                            console.error("API bağlantı hatası:", error);
-                        }
-                    }
-                
-                    // Arama çubuğunda input etkinliği dinle
-                    searchInput.addEventListener("input", (e) => {
-                        const query = e.target.value.toLowerCase(); // Kullanıcı girdisini al
-                        resultsContainer.innerHTML = ""; // Eski sonuçları temizle
-                        resultsContainer.style.display = query ? "block" : "none"; // Arama çubuğu boşsa gizle
-                
-                        // Ürünleri filtrele ve sonuçları listele
-                        const filteredProducts = products.filter(product =>
-                            product.name.toLowerCase().includes(query)
-                        );
-                
-                        if (filteredProducts.length === 0) {
-                            resultsContainer.innerHTML = "<p style='padding: 10px;'>Sonuç bulunamadı.</p>";
-                            return;
-                        }
-                
-                        filteredProducts.forEach(product => {
-                            const productElement = document.createElement("div");
-                            productElement.style.padding = "10px";
-                            productElement.style.borderBottom = "1px solid #ddd";
-                            productElement.innerHTML = `
-                                <a href="taban-malzemeleri-detay.html?id=${product.id} style="text-decoration: none; color: #333;">
-                                    <strong>${product.name}</strong> - ₺${product.price}
-                                </a>
-                            `;
-                            resultsContainer.appendChild(productElement);
-                        });
-                    });
-                
-                    // Sayfa yüklendiğinde ürünleri API'den çek
-                    document.addEventListener("DOMContentLoaded", fetchProducts);
-                </script>
+                </div>         
     
 å    
-
-
-
-
 
 <div class="user-actions">
     <div class="action-item">
@@ -138,69 +85,8 @@
         <div id="product-list" class="product-list"></div>
     </section>
 
-    <script>
-        // Menü simgesi tıklama işlevi
-        document.getElementById("menu-toggle").addEventListener("click", function() {
-            const sidebar = document.getElementById("sidebar");
-            sidebar.classList.toggle("open");
-        });
-
-        // Sidebar'ı kapatmak için "X" butonuna tıklama işlevi
-        document.getElementById("close-sidebar").addEventListener("click", function() {
-            const sidebar = document.getElementById("sidebar");
-            sidebar.classList.remove("open");
-        });
-
-        // fetchTabanMalzemeleri fonksiyonu
-        async function fetchTabanMalzemeleri() {
-            try {
-                const response = await fetch("http://localhost:3000/api/taban-malzemeleri");
-                if (!response.ok) {
-                    throw new Error("Ürünler getirilemedi");
-                }
-
-                const products = await response.json();
-                const productList = document.getElementById("product-list");
-
-                if (products.length === 0) {
-                    productList.innerHTML = '<p>Ürün bulunamadı.</p>';
-                    return;
-                }
-
-                products.forEach((product) => {
-                    const productCard = document.createElement("div");
-                    productCard.classList.add("product-card");
-
-                    productCard.innerHTML = `
-                    <div class="product-card">
-                        <div class="product-image-container">
-                            <img src="${product.image_url}" alt="${product.name}" class="product-image">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">${product.name}</h3>
-                            <p class="product-description">${product.description}</p>
-                            <p class="product-price">${product.price} TL</p>
-                            <p class="product-rating">${"⭐".repeat(product.rating || 0)}</p>
-                            <button class="add-to-cart">Sepete Ekle</button>
-                        </div>
-                    </div>
-                    `;
-
-                    // Ürün kartına tıklanabilirlik ekleme
-                    productCard.addEventListener("click", () => {
-                        window.location.href = `taban-malzemeleri-detay.html?id=${product.id}`; // Detay sayfasına yönlendirme
-                    });
-
-                    productList.appendChild(productCard);
-                });
-            } catch (error) {
-                console.error("Veriler çekilirken hata oluştu:", error);
-            }
-        }
-
-        // Sayfa yüklendiğinde fetch fonksiyonunu çalıştır
-        document.addEventListener("DOMContentLoaded", fetchTabanMalzemeleri);
-    </script>
     <script src="index.js"></script>
+    <script src="tabanmalzemeleri.js"> </script>
+    <script src="search-bar.js"></script>
 </body>
 </html>

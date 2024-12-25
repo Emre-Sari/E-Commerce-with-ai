@@ -206,7 +206,47 @@ app.get('/top-products', (req, res) => {
     }
 
     if (results.length === 0) {
-      return res.status(404).send('Kullanıcıya ait tıklama verisi bulunamadı.');
+      // Kullanıcıya ait tıklama verisi yoksa rastgele ürünler getir
+      const randomQuery = `
+        SELECT id, name, image_url, price
+        FROM products
+        ORDER BY RAND()
+        LIMIT 5
+      `;
+
+      db.query(randomQuery, (randomErr, randomResults) => {
+        if (randomErr) {
+          return res.status(500).send('Veritabanı hatası.');
+        }
+
+        if (randomResults.length === 0) {
+          return res.status(404).send('Ürün bulunamadı.');
+        }
+
+        return res.json(randomResults);
+      });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+
+app.get('/random-products', (req, res) => {
+  const query = `
+    SELECT id, name, image_url, price
+    FROM products
+    ORDER BY RAND()
+    LIMIT 5
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      return res.status(500).send('Veritabanı hatası.');
+    }
+
+    if (results.length === 0) {
+      return res.status(404).send('Ürün bulunamadı.');
     }
 
     res.json(results);
