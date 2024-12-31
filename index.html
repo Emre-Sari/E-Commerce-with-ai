@@ -41,7 +41,26 @@
                     
                 <div class="action-item">
                     <img src="img/cart.svg" alt="Cart Icon" class="icon">
-                    <a href="#">Sepet</a>
+                    <a href="cart.html">Sepet</a>
+                  </div>
+
+                  <div style="display: flex; align-items: center; position: relative;">
+                    <i class="fas fa-shopping-cart" style="font-size: 24px; color: #007bff;"></i>
+                    <span id="cart-count" style="
+                      position: absolute;
+                      top: -5px;
+                      right: -10px;
+                      background: rgb(14, 55, 18);
+                      color: white;
+                      font-size: 16px;
+                      font-weight: bold;
+                      width: 24px;
+                      height: 24px;
+                      border-radius: 50%;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                    ">0</span>
                 </div>
             </div>
             </div>
@@ -118,6 +137,8 @@ if (username) {
           console.error('Geçersiz fiyat:', product.price);
           return; // Eğer fiyat geçerli değilse, bu ürünü atla
         }
+        updateCartCount();
+
 
         // İndirim yüzdesi hesaplama
         const discountPercentage = Math.round((1 - price / (price / 0.56)) * 100);

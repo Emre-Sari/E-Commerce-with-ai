@@ -46,8 +46,7 @@ async function fetchTabanMalzemeleri() {
 
             // Ürün kartına tıklanabilirlik ekleme ve ID'yi ekrana yazdırma
             productCard.addEventListener("click", async () => {
-                // ID'yi ekranda göstermek için alert
-                alert(`Tıklanan ürünün ID'si: ${product.id}`);
+               
                 console.log(`Tıklanan ürünün ID'si: ${product.id}`);
 
                 // Ürün ID'sini veritabanına kaydetmek için API'ye gönder
@@ -56,6 +55,17 @@ async function fetchTabanMalzemeleri() {
                 // Ürün sayfasına yönlendirme
                 window.location.href = `taban-malzemeleri-detay.html?id=${product.id}`;
             });
+            // "Sepete Ekle" butonuna özel tıklama işlevi
+            const addToCartButton = productCard.querySelector(".add-to-cart");
+            addToCartButton.addEventListener("click", (event) => {
+                // Tıklama olayının üst seviyeye yayılmasını engeller
+                event.stopPropagation();
+
+                // Sepete ürün ekleme işlemi
+                addToCart(product.id);
+
+            });
+            updateCartCount();
 
             productList.appendChild(productCard);
         });
@@ -88,5 +98,31 @@ async function logProductClick(productId) {
     }
 }
 
+function updateCartCount() {
+    fetch('http://localhost:3000/cart/count')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Sepet sayacı alınamadı.');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("API'den gelen veri:", data);
+        const cartCountElement = document.getElementById('cart-count');
+        if (cartCountElement) {
+            cartCountElement.textContent = data.total_items || 0; // Gelen veriyi sayaçta göster
+        } else {
+          console.error("Cart count elementi bulunamadı!");
+        }
+      })
+      .catch((error) => {
+        console.error('Sepet sayacı hatası:', error);
+      });
+}
+  
+
+  
+  // Sayfa yüklendiğinde veya sepet değiştiğinde sayaç güncellenir
+  window.onload = updateCartCount;
 // Sayfa yüklendiğinde fetch fonksiyonunu çalıştır
 document.addEventListener("DOMContentLoaded", fetchTabanMalzemeleri);

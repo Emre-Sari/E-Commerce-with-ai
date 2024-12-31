@@ -35,6 +35,16 @@ async function fetchTabanMalzemeleri() {
                 // Ürün kimliği detay sayfasına parametre olarak gönderilir
                 window.location.href = `/taban-malzemeleri-detay.html?id=${product.id}`;
             });
+            // "Sepete Ekle" butonuna özel tıklama işlevi
+            const addToCartButton = productCard.querySelector(".add-to-cart");
+            addToCartButton.addEventListener("click", (event) => {
+                // Tıklama olayının üst seviyeye yayılmasını engeller
+                event.stopPropagation();
+
+                // Sepete ürün ekleme işlemi
+                addToCart(product.id);
+
+            });
 
             productList.appendChild(productCard);
         });

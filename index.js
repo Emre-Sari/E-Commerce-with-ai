@@ -53,3 +53,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
   
+function updateCartCount() {
+  fetch('http://localhost:3000/cart/count')
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Sepet sayacı alınamadı.');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("API'den gelen veri:", data);
+      const cartCountElement = document.getElementById('cart-count');
+      if (cartCountElement) {
+          cartCountElement.textContent = data.total_items || 0; // Gelen veriyi sayaçta göster
+      } else {
+        console.error("Cart count elementi bulunamadı!");
+      }
+    })
+    .catch((error) => {
+      console.error('Sepet sayacı hatası:', error);
+    });
+}
+

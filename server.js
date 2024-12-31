@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Drogba11gs@",  // kendi MySQL şifrenizi girin
+    password: "2002Emre.",  // kendi MySQL şifrenizi girin
     database: "shopDB"
 });
 
@@ -253,7 +253,92 @@ app.get('/random-products', (req, res) => {
   });
 });
 
-app.listen(port, () => {
-    console.log(`Sunucu ${port} portunda çalışıyor.`);
+
+
+
+
+
+
+
+
+
+
+// Sepete ürün ekleme
+app.post('/add-to-cart', (req, res) => {
+  const { productId } = req.body;
+
+  const query = `
+      INSERT INTO cart (product_id, quantity)
+      VALUES (?, 1)
+      ON DUPLICATE KEY UPDATE quantity = quantity + 1
+  `;
+
+  db.query(query, [productId], (err) => {
+      if (err) {
+          return res.status(500).json({ message: 'Hata oluştu' });
+      }
+      res.json({ message: 'Ürün sepete eklendi' });
+  });
 });
 
+// Sepeti listeleme
+app.get('/cart', (req, res) => {
+  const query = `
+      SELECT cart.id AS cart_id, products.id AS product_id, products.name, products.price, products.image_url, cart.quantity
+      FROM cart
+      JOIN products ON cart.product_id = products.id
+  `;
+
+  db.query(query, (err, results) => {
+      if (err) {
+          return res.status(500).json({ message: 'Hata oluştu' });
+      }
+      res.json(results);
+  });
+});
+
+// Sepetten ürün kaldırma
+app.post('/remove-from-cart', (req, res) => {
+  const { cartId } = req.body;
+  const query = "DELETE FROM cart WHERE product_id = ?";
+
+  db.query(query, [cartId], (err) => {
+      if (err) {
+          return res.status(500).json({ message: 'Hata oluştu' });
+      }
+      res.json({ message: 'Ürün sepetten kaldırıldı' });
+  });
+});
+
+// Sepet miktarını güncelleme
+app.post('/update-cart', (req, res) => {
+  const { cartId, quantity } = req.body;
+
+  if (quantity <= 0) {
+      return res.status(400).json({ message: 'Miktar 0 veya daha az olamaz.' });
+  }
+
+  const query = "UPDATE cart SET quantity = ? WHERE product_id = ?";
+
+  db.query(query, [quantity, cartId], (err) => {
+      if (err) {
+          return res.status(500).json({ message: 'Hata oluştu' });
+      }
+      res.json({ message: 'Ürün miktarı güncellendi' });
+  });
+});
+
+app.listen(port, () => {
+  console.log(`Sunucu ${port} portunda çalışıyor.`);
+});
+
+app.get('/cart/count', (req, res) => {
+  const query = 'SELECT SUM(quantity) AS total_items FROM cart';
+
+  db.query(query, (err, result) => {
+    if (err) {
+      return res.status(500).send('Veritabanı hatası');
+    }
+    res.json({ total_items: result[0].total_items || 0 });
+  });
+});

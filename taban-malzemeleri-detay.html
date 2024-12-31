@@ -55,8 +55,27 @@
     
 <div class="action-item">
     <img src="img/cart.svg" alt="Cart Icon" class="icon">
-    <a href="#">Sepet</a>
+<a href="cart.html">Sepet</a>
 </div>
+<div style="display: flex; align-items: center; position: relative;">
+    <i class="fas fa-shopping-cart" style="font-size: 24px; color: #007bff;"></i>
+    <span id="cart-count" style="
+      position: absolute;
+      top: -5px;
+      right: -10px;
+      background: rgb(14, 55, 18);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    ">0</span>
+</div>
+
 </div>
         </div>
 
@@ -232,7 +251,7 @@
                 <h1 id="product-title" class="product-title">Ürün Adı</h1>
                 <p id="product-price" class="product-price">₺0</p>
                 <p id="product-description" class="product-description">Ürün açıklaması burada görünecek.</p>
-                <button class="add-to-cart-btn">Sepete Ekle</button>
+                <button class="add-to-cart-btn" id="add-to-cart">Sepete Ekle</button>
             </div>
         </div>
 <!-- Özellikler Tablosu -->
@@ -309,6 +328,33 @@
     </div>
 
     <script>
+
+function updateCartCount() {
+    fetch('http://localhost:3000/cart/count')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Sepet sayacı alınamadı.');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("API'den gelen veri:", data);
+        const cartCountElement = document.getElementById('cart-count');
+        if (cartCountElement) {
+            cartCountElement.textContent = data.total_items || 0; // Gelen veriyi sayaçta göster
+        } else {
+          console.error("Cart count elementi bulunamadı!");
+        }
+      })
+      .catch((error) => {
+        console.error('Sepet sayacı hatası:', error);
+      });
+}
+  
+
+
+
+
 document.getElementById("menu-toggle").addEventListener("click", function() {
     const sidebar = document.getElementById("sidebar");
     sidebar.classList.toggle("open");
@@ -319,6 +365,18 @@ document.getElementById("close-sidebar").addEventListener("click", function() {
     const sidebar = document.getElementById("sidebar");
     sidebar.classList.remove("open");
 });       
+
+document.getElementById("add-to-cart").addEventListener("click", function() {
+    const product = {
+        id: new URLSearchParams(window.location.search).get("id"),
+        name: document.getElementById("product-title").textContent,
+        price: document.getElementById("product-price").textContent.replace("₺", ""),
+        image_url: document.getElementById("product-image").src,
+    };
+
+   addToCart(product.id);
+
+});
 
 
 
@@ -341,14 +399,18 @@ document.getElementById("close-sidebar").addEventListener("click", function() {
                 document.getElementById("product-title").textContent = product.name;
                 document.getElementById("product-price").textContent = `₺${product.price}`;
                 document.getElementById("product-description").textContent = product.description;
+                
             } catch (error) {
                 console.error("Ürün bilgileri yüklenirken hata oluştu:", error);
             }
+            updateCartCount();
         }
 
         document.addEventListener("DOMContentLoaded", fetchProductDetails);
     </script>
 <script src="index.js"></script>
 <script src="search-bar.js"></script>
+<script src="cart.js"></script>
+
 </body>
 </html>
